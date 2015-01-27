@@ -1,0 +1,13 @@
+3(c):
+Notice coolness difference is big.
+If we want to choose more cool characters, square root scale is better. It scale down the bigger ones. 
+Otherwise, linear scale is better. It remain the big difference.
+
+4:
+Both scale versions have the same nodes labeled, because coolness is fixed and scale only change the rendering strategy of nodes. 
+
+
+7(b):
+I changed the charge to -150 to let the nodes repel each other more when they get closed. And I change linkDistance to 80 to let nodes with relation keep from cluttering. 
+
+

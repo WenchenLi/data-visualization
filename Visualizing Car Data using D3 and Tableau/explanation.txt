@@ -1,0 +1,12 @@
+2:
+Highlight the retail price column to show the focus of this table. 
+Divide the price range above 70,000 into four groups further discriminate cars. 
+Align the price in thousand to cut the unnecessary price detail. 
+
+3:
+Color: a. The color scheme for all European cars are in blue but in different scale. Use red to represent Japanese car.  
+       b. City MPG and Hwy MPG belongs to MPG, so I choose same kind of color in different color scale. 
+Size: Set the range properly to avoid the case all the bars reach higher range in the graph.
+
+4:
+This time I try to visually show the brand instead of using text, and then for each click of the brand, it will show one attribute of the manufacturer with the scaled radius of the brand circle. But I stuck at the transformation of the circle. 
