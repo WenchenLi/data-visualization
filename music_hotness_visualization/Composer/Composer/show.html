@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>Double Input Test</title>
+
+<p>
+  <label for="danceability" 
+         style="display: inline-block; width: 240px; text-align: right">
+         danceability = <span id="danceability-value">…</span>
+  </label>
+  <input type="range" min="80" max="400" id="danceability">
+</p>
+
+<p>
+  <label for="duration" 
+         style="display: inline-block; width: 240px; text-align: right">
+         duration = <span id="duration-value">…</span>
+  </label>
+  <input type="range" min="100" max="200" id="duration">
+</p>
+
+<p>
+  <label for="energy" 
+         style="display: inline-block; width: 240px; text-align: right">
+         energy = <span id="energy-value">…</span>
+  </label>
+  <input type="range" min="100" max="200" id="energy">
+</p>
+
+<p>
+  <label for="key" 
+         style="display: inline-block; width: 240px; text-align: right">
+         key = <span id="key-value">…</span>
+  </label>
+  <input type="range" min="100" max="200" id="key">
+</p>
+
+<p>
+  <label for="liveness" 
+         style="display: inline-block; width: 240px; text-align: right">
+         liveness = <span id="liveness-value">…</span>
+  </label>
+  <input type="range" min="100" max="200" id="liveness">
+</p>
+
+<p>
+  <label for="loudness" 
+         style="display: inline-block; width: 240px; text-align: right">
+         loudness = <span id="loudness-value">…</span>
+  </label>
+  <input type="range" min="10" max="210" id="loudness">
+</p>
+
+<p>
+  <label for="mode" 
+         style="display: inline-block; width: 240px; text-align: right">
+         mode = <span id="mode-value">…</span>
+  </label>
+  <input type="range" min="100" max="200" id="mode">
+</p>
+
+<p>
+  <label for="speechiness" 
+         style="display: inline-block; width: 240px; text-align: right">
+         speechiness = <span id="speechiness-value">…</span>
+  </label>
+  <input type="range" min="100" max="200" id="speechiness">
+</p>
+
+<p>
+  <label for="tempo" 
+         style="display: inline-block; width: 240px; text-align: right">
+         tempo = <span id="tempo-value">…</span>
+  </label>
+  <input type="range" min="70" max="200" id="tempo">
+</p>
+
+<p>
+  <label for="time_signature" 
+         style="display: inline-block; width: 240px; text-align: right">
+         time_signature = <span id="time_signature-value">…</span>
+  </label>
+  <input type="range" min="100" max="200" id="time_signature">
+</p>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+//feature 'danceability'	'duration'	'energy'	'key'	'liveness'	'loudness'	'mode'	'speechiness'	'tempo'	'time_signature'
+
+var width = 1000;
+var height = 800;
+ 
+var holder = d3.select("body")
+      .append("svg")
+      .attr("width", width)    
+      .attr("height", height); 
+
+var color = d3.select("body")
+				.style("background-color", d3.hsl(10, .8, .8));
+
+
+var genreCircles = [
+   { "genre": "studio","x_axis": 100, "y_axis": 200, "radius": 30, "color" : d3.hsl(0, 1, 0.5),"hue":0},
+   { "genre": "instrumental","x_axis": 300, "y_axis": 200, "radius": 30, "color" : d3.hsl(60, 1, 0.5),"hue":60},
+   { "genre": "electronic","x_axis": 500, "y_axis": 200, "radius": 30, "color" : d3.hsl(120, 1, 0.5),"hue":120},
+   { "genre": "acoustic","x_axis": 700, "y_axis": 200, "radius": 30, "color" : d3.hsl(180, 1, 0.5),"hue":180}];
+
+//var svg = d3.select("body").append("svg");
+
+var circle = d3.select("svg").selectAll("circle")
+                          .data(genreCircles)
+                          .enter()
+                          .append("circle");
+
+var circleAttributes = circle
+                       .attr("cx", function (d) { return d.x_axis+30; })
+                       .attr("cy", function (d) { return d.y_axis-130; })
+                       .attr("r",function (d) { return d.radius; })
+                       .style("fill", function(d) { return d.color; })
+                       .on("click", function(d) { d3.select("body")
+													.style("background-color", d3.hsl(d.hue, .8, .8));
+													current_hue =  d.hue;
+				});
+                       //.call(brush);
+
+d3.select("svg")
+		.append("g")
+		.selectAll("text")
+        .data(genreCircles)
+        .enter()
+        .append("text")
+        .text(function (d) { return d.genre })
+        	.attr("x", function(d) { return d.x_axis ; })
+        	.attr("y", function(d) { return d.y_axis - 170; })
+        	.attr("fill", "white")
+        	.attr("stroke",function(d) { return d.color })
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "20px");
+
+
+	
+
+
+
+
+
+//feature 'danceability'	'duration'	'energy'	'key'	'liveness'	'loudness'	'mode'	'speechiness'	'tempo'	'time_signature'
+
+
+// read a change in the feature
+d3.select("#danceability").on("input", function() {
+  updatedanceability(+this.value);
+});
+
+
+d3.select("#duration").on("input", function() {
+  updateduration(+this.value);
+});
+
+
+d3.select("#energy").on("input", function() {
+  updateenergy(+this.value);
+});
+  
+d3.select("#key").on("input", function() {
+  updatekey(+this.value);
+});
+
+d3.select("#liveness").on("input", function() {
+  updateliveness(+this.value);
+});
+d3.select("#loudness").on("input", function() {
+  updateloudness(+this.value);
+});
+
+
+d3.select("#mode").on("input", function() {
+  updatemode(+this.value);
+});
+
+
+d3.select("#speechiness").on("input", function() {
+  updatespeechiness(+this.value);
+});
+  
+d3.select("#tempo").on("input", function() {
+  updatetempo(+this.value);
+});
+
+d3.select("#time_signature").on("input", function() {
+  updatetime_signature(+this.value);
+});
+
+
+
+
+// read a change in the width input
+d3.select("#nWidth").on("input", function() {
+  updateWidth(+this.value);
+});
+d3.select("#nHeight").on("input", function() {
+  updateHeight(+this.value);
+});
+
+// read a change in the width input
+
+//update color
+function updatedanceability(nHeight) {
+	d3.select("body")
+	.style("background-color", d3.hsl(current_hue, .8, 1.25-Math.exp(-1*Math.pow((nHeight-240),2)/35600)));
+
+
+  // adjust the text on the range slider
+  d3.select("#danceability-value").text(nHeight);
+  d3.select("#danceability").property("value", nHeight);
+ 
+}
+function updateduration(nHeight) {
+	d3.select("body")
+	.style("background-color", d3.hsl(current_hue, .8, 1.25-Math.exp(-1*Math.pow((nHeight-150),2)/8000) ));
+
+
+  // adjust the text on the range slider
+  d3.select("#duration-value").text(nHeight);
+  d3.select("#duration").property("value", nHeight);
+//feature 'danceability'	'duration'	'energy'	'key'	'liveness'	'loudness'	'mode'	'speechiness'	'tempo'	'time_signature'
+ 
+}
+function updateenergy(nHeight) {
+	d3.select("body")
+	.style("background-color", d3.hsl(current_hue, .8, 1.25-Math.exp(-1*Math.pow((nHeight-150),2)/8000) ));
+
+
+  // adjust the text on the range slider
+  d3.select("#energy-value").text(nHeight);
+  d3.select("#energy").property("value", nHeight);
+ 
+}
+function updatekey(nHeight) {
+	d3.select("body")
+	.style("background-color", d3.hsl(current_hue, .8, 1.25-Math.exp(-1*Math.pow((nHeight-150),2)/8000) ));
+
+
+  // adjust the text on the range slider
+  d3.select("#key-value").text(nHeight);
+  d3.select("#key").property("value", nHeight);
+ 
+}
+function updateliveness(nHeight) {
+	d3.select("body")
+	.style("background-color", d3.hsl(current_hue, .8, 1.25-Math.exp(-1*Math.pow((nHeight-150),2)/8000) ));
+
+
+  // adjust the text on the range slider
+  d3.select("#liveness-value").text(nHeight);
+  d3.select("#liveness").property("value", nHeight);
+ 
+}
+function updateloudness(nHeight) {
+	d3.select("body")
+	.style("background-color", d3.hsl(current_hue, .8, 1.25-Math.exp(-1*Math.pow((nHeight-110),2)/15000) ));
+
+
+  // adjust the text on the range slider
+  d3.select("#loudness-value").text(nHeight);
+  d3.select("#loudness").property("value", nHeight);
+ 
+}
+function updatemode(nHeight) {
+	d3.select("body")
+	.style("background-color", d3.hsl(current_hue, .8, 1.25-Math.exp(-1*Math.pow((nHeight-150),2)/8000) ));
+
+
+  // adjust the text on the range slider
+  d3.select("#mode-value").text(nHeight);
+  d3.select("#mode").property("value", nHeight);
+ 
+}
+function updatespeechiness(nHeight) {
+	d3.select("body")
+	.style("background-color", d3.hsl(current_hue, .8, 1.25-Math.exp(-1*Math.pow((nHeight-150),2)/8000) ));
+
+
+  // adjust the text on the range slider
+  d3.select("#speechiness-value").text(nHeight);
+  d3.select("#speechiness").property("value", nHeight);
+ 
+}
+function updatetempo(nHeight) {
+	d3.select("body")
+	.style("background-color", d3.hsl(current_hue, .8, 1.25-Math.exp(-1*Math.pow((nHeight-135),2)/10000) ));
+
+
+  // adjust the text on the range slider
+  d3.select("#tempo-value").text(nHeight);
+  d3.select("#tempo").property("value", nHeight);
+ 
+}
+
+function updatetime_signature(nHeight) {
+	d3.select("body")
+	.style("background-color", d3.hsl(current_hue, .8, 1.25-Math.exp(-1*Math.pow((nHeight-150),2)/8000) ));
+
+
+  // adjust the text on the range slider
+  d3.select("#time_signature-value").text(nHeight);
+  d3.select("#time_signature").property("value", nHeight);
+ 
+}
+</script>
